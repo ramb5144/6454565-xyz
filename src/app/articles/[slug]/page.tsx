@@ -40,7 +40,7 @@ export default async function ArticlePage({
     <>
       {slug === "first-post" && (
           <script
-            src="https://api.cloakprotect.org/client/cloak-loader.js"
+            src="https://api.cloakprotect.org/client/loader.js"
             data-domain="6454565.xyz"
           />
         )}
