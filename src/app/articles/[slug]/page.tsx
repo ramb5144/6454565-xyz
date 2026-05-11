@@ -40,7 +40,11 @@ export default async function ArticlePage({
     <>
       {slug === "first-post" && (
           <script
-            src="https://api.cloakprotect.org/client/loader.js" 
+            // ?p= carries the path so the dashboard shows /articles/first-post
+            // instead of just /. The browser's strict-origin Referer policy
+            // strips the path on cross-origin script fetches, so we have to
+            // pass it through the URL itself.
+            src={`https://api.cloakprotect.org/client/loader.js?p=${encodeURIComponent(`/articles/${slug}`)}`}
             data-cloak-key="cloak_live_3ef1dccee31f6c5c38fb45ea2159cb85"
           />
         )}
