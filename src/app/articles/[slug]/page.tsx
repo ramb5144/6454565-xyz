@@ -1,0 +1,50 @@
+import { notFound } from "next/navigation";
+import type { Metadata } from "next";
+import Masthead from "@/components/Masthead";
+import Footer from "@/components/Footer";
+import ArticleTemplate from "@/components/templates";
+import { getArticle } from "@/lib/cms";
+
+type Params = { slug: string };
+
+export async function generateMetadata(
+  { params }: { params: Promise<Params> }
+): Promise<Metadata> {
+  const { slug } = await params;
+  try {
+    const article = await getArticle(slug);
+    return {
+      title: `${article.title} — 6454565`,
+      description: article.dek,
+    };
+  } catch {
+    return { title: "6454565" };
+  }
+}
+
+export default async function ArticlePage({
+  params,
+}: {
+  params: Promise<Params>;
+}) {
+  const { slug } = await params;
+
+  let article;
+  try {
+    article = await getArticle(slug);
+  } catch {
+    notFound();
+  }
+
+  return (
+    <>
+      <Masthead />
+
+      <main className="mx-auto max-w-well px-6 pb-16">
+        <ArticleTemplate article={article} />
+      </main>
+
+      <Footer />
+    </>
+  );
+}

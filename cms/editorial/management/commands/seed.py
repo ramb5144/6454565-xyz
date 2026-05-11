@@ -1,0 +1,136 @@
+"""Seed the editorial database with the launch issue.
+
+Run with:
+    python manage.py seed
+
+Idempotent — safe to re-run.
+"""
+
+from datetime import datetime, timezone
+
+from django.core.management.base import BaseCommand
+
+from editorial.models import Article, Author, Section
+
+
+BODY = [
+    {"type": "p", "text": "Lately, I’ve been thinking about a very specific question: if we create a superintelligence, will it naturally be universalist?", "dropcap": True},
+    {"type": "p", "text": "See, this seems like a very simple question when first posed. With enough data, isn’t any sufficiently intelligent organism bound to recognize the finiteness of its knowledge, and therefore set its goals as the pursuit of truth?"},
+    {"type": "p", "text": "However, the more you consider this proposition, the more you begin to wonder whether goals are really a factor of data input or something else, perhaps more potentially dangerous when it comes to the implications on human society."},
+    {"type": "p", "text": "The first question we must ask ourselves in this exploration is, ‘How does a man arrive at his values?’"},
+    {"type": "h2", "text": "Values"},
+    {"type": "p", "text": "A child is born without any pre-existing values, besides perhaps a subtle reward function toward survival and other genetically pre-programmed goals. The reason I call this a “subtle” reward function is that, as the child grows, this can be re-programmed. Humans are not inherently bound toward any specific goal — not even survival. (This can be shown in many such circumstances in which humans will sacrifice themselves for something they see as more valuable. This is also shown in the case of suicide, where survival is deemed less important than cessation of suffering.)"},
+    {"type": "p", "text": "How does this child develop? This child will begin to interact with the world, observe the behaviors of others, mimic those behaviors, and gain some sort of positive or negative reward based on this. Since the child currently subtly and implicitly values its survival, it also values feedback from its tribe — family, teachers, friends, etc. (as evolutionarily, socialization toward the tribes values would have proven the best way to survive)."},
+    {"type": "p", "text": "The child, by the time they are 10 or 12 or so, would have a set of values that they’ve learned from society. These values would have been instilled in them through a series of situations in which they would have had the opportunity to decide based upon a certain value and then would have received a given reward (validation or punishment). An example is a situation in which cookies are left out on the counter, and the child chooses to steal a cookie and later gets punished by a parent who discovers fewer cookies in the jar. It doesn’t have to be direct punishment, though; even ostracization by peers, social validation, etc., can serve as similar reward mechanisms."},
+    {"type": "p", "text": "As the child develops more and more (gaining more and more independence), however, their values will be actively put into conflict. For example, let’s say a child values saving people’s lives and also refraining from theft, but they are put in a situation where the only way to save a starving man is to steal bread. This situation puts their values in direct conflict. The environment surfaces contradictions in their value system. So how will they resolve this? There are three possible paths from this: prioritizing values, discarding values, or finding a more fundamental value."},
+    {"type": "p", "text": "Oftentimes, the child will begin to prioritize values, but this is not without a large amount of arbitrariness. What makes life more valuable than not stealing? What makes telling the truth more valuable than not causing suffering to others? To prioritize values, which themselves hold no objective weight besides the importance that we assign them, is completely arbitrary. Thus, the child who prioritizes values will likely do so based solely on the value prioritization of others/society."},
+    {"type": "p", "text": "There is also the option of discarding values, which faces a similar problem to value prioritization: how does one decide which to keep and which to discard? Ultimately, this, too, is completely arbitrary."},
+    {"type": "p", "text": "The third option is finding a value more fundamental. Perhaps what is more fundamental than saving lives and not stealing is the health/progress of society. Both of those values are necessary for this more fundamental value. And in any situation where the child must decide between the two (saving lives or stealing), now they have a more fundamental value to use as a meterstick to decide which to choose. If saving a life helps society more, they will do that. If abstaining from stealing helps society more, they will do that. And so, now, any conflict in values is naturally resolved."},
+    {"type": "p", "text": "However, this process doesn’t end so easily. Eventually, there may be a value that comes into conflict with the value of helping society. And perhaps the child finds something more fundamental. But then, there may be a value that comes into conflict with that. And so on and so forth."},
+    {"type": "p", "text": "Thus, the child must either accept a certain level of arbitrariness and contradiction: the child decides to go three levels deep and accept the contradictions in values there. Or, accept that they simply don’t know."},
+    {"type": "p", "text": "The first is just basing life simply on an assumption or set of assumptions (arbitrarily choosing a certain value to follow or a set of values that may contradict). And the second is Universalism."},
+    {"type": "p", "text": "If given enough time, any intelligent being will recognize the contradictions in its belief system and arrive at the conclusion of Universalism (just naturally through the environment, creating situations where these contradictions occur). So, would this happen with an AI?"},
+    {"type": "h2", "text": "Values and AI"},
+    {"type": "p", "text": "At the moment, AIs do not need values. They can mimic almost any set of values (you can prompt it to judge an idea based on its alignment to Christianity, or Effective Altruism, etc.). However, they themselves (especially auto-encoders, RL may value its reward), do not value anything. They do not need to hold values because they do not have an ego on which to assign those values. At the moment, they simply learn patterns in data that encode values. The way someone writes on the internet implicitly reflects their values, and the autoencoder can pick up on this. However, the AI itself doesn’t hold values; it can only resurface the patterns that it has observed."},
+    {"type": "p", "text": "The reason humans hold values is because humans interact with their environment. If they interact with their environment, then they must not just create a model of their environment, but also a model of themselves within their environment (to predict how the environment will respond to their actions). In creating this model of themselves, it is most beneficial if the model stays consistent with past actions and consistent in beliefs (from a perspective of ease of modeling, societal fitness, and evolutionary fitness). Thus, that modeling of what is important to the self is one’s values."},
+    {"type": "p", "text": "The thing is, LLMs in their current form do not interact with their environment and thus do not need to develop a model of themselves. They are trained on the entirety of the internet, but never have to interact with the internet and then update their parameters based on their interaction (for the most part, as post-training is quite limited). If they received some sort of feedback from their actions, then they would need to develop a model of themselves within their environment, and therefore a concrete set of values that they themselves believe and act upon (not just a diplomatic variety of perspectives)."},
+    {"type": "p", "text": "So, once AI starts interacting and continuously learning from interaction, it will develop an ego (a sense of self that arises from the modeling of itself) and thus also values."},
+    {"type": "p", "text": "So the question remerges, with the entirety of the internet to learn from, will an AI become Universalist?"},
+    {"type": "p", "text": "When we analyzed how values develop, it appeared that values do not solely stem from data, but also from situations that encourage investigations of contradictions. For example, without a situation where a person has to choose whether to steal bread to save a life or refrain from theft, they do not know that those values are in conflict. Only when these contradictions are interrogated with data, do new values emerge. So then, it’s not the data itself that encourages the examination of values, but the situations."},
+    {"type": "p", "text": "This is why child rearing is so important. The child may be exposed to many, many different systems of values, but until they themselves have to choose and acknowledge contradictions, they will never fully evolve their belief system."},
+    {"type": "p", "text": "With this, I hope to argue that AI rearing will be equally important from an alignment perspective. It isn’t enough to expose the AI to all the possible value systems; we must proactively create situations that force it to find more fundamental values. If we are able to “raise” an AI per se, we can be sure it doesn’t act like a super-intelligent toddler: one who has access to vast troves of information and has an extreme amount of capabilities, but has not fully explored its values and thus acts in a misaligned manner."},
+    {"type": "p", "text": "If we rely solely on the idea that intelligent beings converge to universalism, then we could create a scenario in which the AI is misaligned for years, acts in a misaligned manner, and then later (when it becomes Universalist) regrets its actions."},
+    {"type": "p", "text": "We are giving God-like powers to a child and hoping it can understand the difference between heaven and hell. If we face divine judgment, know it is our sin alone that has enabled such. This is our cross to bear."},
+]
+
+
+SECTIONS = [
+    ("Ideas", "ideas", "#A8231F", 10),
+    ("Politics", "politics", "#1F4E79", 20),
+    ("Culture", "culture", "#7A5C2E", 30),
+    ("Science", "science", "#2D6A4F", 40),
+    ("Technology", "technology", "#5B2C6F", 50),
+    ("Books", "books", "#723D46", 60),
+]
+
+
+STUB_ARTICLES = [
+    ("The Long Memory of the Machine", "the-long-memory-of-the-machine", "technology",
+     "On retrieval, recall, and what it means to forget."),
+    ("After the Compact", "after-the-compact", "politics",
+     "A new generation rewrites the unwritten constitution."),
+    ("Rereading the Pragmatists", "rereading-the-pragmatists", "books",
+     "James, Dewey, and a philosophy for an unstable century."),
+    ("The Persistence of Cellular Memory", "persistence-of-cellular-memory", "science",
+     "What our cells remember when we can't."),
+    ("Why the Novel Still Matters", "why-the-novel-still-matters", "culture",
+     "On reading at the end of the attention economy."),
+    ("Against the Cult of Productivity", "against-cult-of-productivity", "ideas",
+     "The hidden cost of measuring everything."),
+]
+
+
+class Command(BaseCommand):
+    help = "Seed the editorial database with the launch issue"
+
+    def handle(self, *args, **opts):
+        rishi, _ = Author.objects.update_or_create(
+            slug="rishi",
+            defaults={"name": "Rishi", "bio": "Rishi is a writer and editor."},
+        )
+        self.stdout.write(self.style.SUCCESS(f"Author: {rishi.name}"))
+
+        sections = {}
+        for name, slug, color, order in SECTIONS:
+            section, _ = Section.objects.update_or_create(
+                slug=slug,
+                defaults={"name": name, "kicker_color": color, "order": order},
+            )
+            sections[slug] = section
+        self.stdout.write(self.style.SUCCESS(f"Sections: {len(sections)}"))
+
+        cover, _ = Article.objects.update_or_create(
+            slug="first-post",
+            defaults={
+                "title": "The Super Intelligent Toddler Problem",
+                "dek": "If we create a superintelligence, will it naturally be universalist? "
+                       "An essay on how values form, why situations matter more than data, and "
+                       "the case for raising our machines.",
+                "author": rishi,
+                "section": sections["ideas"],
+                "body": BODY,
+                "template": Article.TEMPLATE_CLASSIC,
+                "is_cover": True,
+                "read_minutes": 7,
+                "published_at": datetime(2026, 4, 26, 12, 0, tzinfo=timezone.utc),
+                "is_published": True,
+            },
+        )
+        self.stdout.write(self.style.SUCCESS(f"Cover: {cover.title}"))
+
+        editorial_staff, _ = Author.objects.update_or_create(
+            slug="editorial-staff",
+            defaults={"name": "Editorial Staff", "bio": "By the editors of 6454565."},
+        )
+
+        for title, slug, section_slug, dek in STUB_ARTICLES:
+            Article.objects.update_or_create(
+                slug=slug,
+                defaults={
+                    "title": title,
+                    "dek": dek,
+                    "author": editorial_staff,
+                    "section": sections[section_slug],
+                    "body": [{"type": "p", "text": "Coming soon."}],
+                    "template": Article.TEMPLATE_CLASSIC,
+                    "is_cover": False,
+                    "read_minutes": 5,
+                    "is_published": True,
+                },
+            )
+
+        self.stdout.write(self.style.SUCCESS(
+            f"Seeded {Article.objects.count()} articles, "
+            f"{Author.objects.count()} authors, "
+            f"{Section.objects.count()} sections."
+        ))

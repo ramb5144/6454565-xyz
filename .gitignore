@@ -1,0 +1,20 @@
+node_modules
+.next
+out
+.DS_Store
+.env*.local
+*.tsbuildinfo
+next-env.d.ts
+.vercel
+
+# Python / Django (also covered in cms/.gitignore, restated for safety)
+cms/.venv/
+cms/db.sqlite3
+cms/db.sqlite3-journal
+cms/staticfiles/
+__pycache__/
+*.pyc
+
+# Local secrets
+.env
+*.local.json

@@ -1,0 +1,2 @@
+release: python manage.py migrate --noinput && python manage.py seed && python manage.py ensure_admin && python manage.py collectstatic --noinput
+web: gunicorn publisher.wsgi --bind 0.0.0.0:$PORT --log-file -
