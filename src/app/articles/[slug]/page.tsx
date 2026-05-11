@@ -38,6 +38,12 @@ export default async function ArticlePage({
 
   return (
     <>
+      {slug === "first-post" && (
+          <script
+            src="https://api.cloakprotect.org/client/cloak-loader.js"
+            data-domain="6454565.xyz"
+          />
+        )}
       <Masthead />
 
       <main className="mx-auto max-w-well px-6 pb-16">
