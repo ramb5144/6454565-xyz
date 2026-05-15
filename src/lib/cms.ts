@@ -71,13 +71,15 @@ export async function getArticleList(): Promise<ArticleCard[]> {
   return getJson<ArticleCard[]>("/api/articles/", articlesSnapshot as ArticleCard[]);
 }
 
+const fullBodySnapshots: Record<string, Article> = {
+  [(coverSnapshot as Article).slug]: coverSnapshot as Article,
+  [(superCoolPostSnapshot as Article).slug]: superCoolPostSnapshot as Article,
+};
+
 export async function getArticle(slug: string): Promise<Article> {
+  if (fullBodySnapshots[slug]) return fullBodySnapshots[slug];
   const list = articlesSnapshot as ArticleCard[];
   const baked = list.find((a) => a.slug === slug);
-  const fullBodySnapshots: Record<string, Article> = {
-    [(coverSnapshot as Article).slug]: coverSnapshot as Article,
-    [(superCoolPostSnapshot as Article).slug]: superCoolPostSnapshot as Article,
-  };
-  const fallback = (fullBodySnapshots[slug] ?? baked ?? coverSnapshot) as Article;
+  const fallback = (baked ?? coverSnapshot) as Article;
   return getJson<Article>(`/api/articles/${slug}/`, fallback);
 }
