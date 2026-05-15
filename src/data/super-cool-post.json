@@ -1,0 +1,43 @@
+{
+  "title": "The Architecture of Forgetting",
+  "slug": "super-cool-post",
+  "dek": "Why the internet's inability to forget may be the defining crisis of the next decade.",
+  "author": {
+    "name": "Rishi",
+    "slug": "rishi",
+    "bio": "Rishi is a writer and editor.",
+    "avatar_url": ""
+  },
+  "section": {
+    "name": "Technology",
+    "slug": "technology",
+    "kicker_color": "#5B2C6F"
+  },
+  "body": [
+    { "type": "p", "text": "There is something deeply unnatural about a world that never forgets.", "dropcap": true },
+    { "type": "p", "text": "Human memory is lossy by design. We compress decades into impressions, discard the irrelevant, soften the painful, and reconstruct the past each time we reach for it. This isn't a bug. It is the mechanism by which we remain functional. A person who remembered everything with perfect fidelity would be paralyzed by the weight of it — every slight, every embarrassment, every wrong turn preserved in crystalline detail." },
+    { "type": "p", "text": "The internet has no such mercy. Every forum post from 2004, every ill-considered tweet, every photograph uploaded by a friend at a party you barely remember — all of it persists, indexed, searchable, and ready to surface at the worst possible moment. We built a civilization-scale memory that is structurally incapable of the one thing biological memory does best: letting go." },
+    { "type": "p", "text": "This wasn't the plan. The early architects of the web imagined a library, not a panopticon. They thought about access, not permanence. Link rot, they assumed, would be the bigger problem — that the web would forget too much, too quickly. And in some ways they were right: nearly 40 percent of all URLs from 2013 are now dead. But the things that survive tend to be precisely the things you’d rather they didn’t." },
+    { "type": "h2", "text": "The Asymmetry of Digital Memory" },
+    { "type": "p", "text": "The core problem is an asymmetry. Forgetting on the internet is expensive and unreliable. Remembering is free and automatic. Every platform defaults to retention. Every search engine defaults to indexing. Every archive defaults to preservation. The burden falls entirely on the person who wants something gone, and the tools available to them are laughably inadequate: a DMCA takedown, a right-to-be-forgotten request, a polite email to a webmaster who hasn’t checked that inbox since 2016." },
+    { "type": "p", "text": "Meanwhile, the forces of remembering are industrialized. Scraping services archive entire websites overnight. AI training pipelines hoover up terabytes of human expression and compress it into model weights, where it becomes irrecoverable — not deleted, not accessible, but smeared across billions of parameters in a form that no legal framework can address." },
+    { "type": "p", "text": "We have, without quite meaning to, built the first system in human history where the default state of information is immortality. Every prior medium degraded: stone eroded, papyrus rotted, magnetic tape demagnetized. Digital information, replicated across redundant systems and cached by third parties you’ve never heard of, simply persists. Not because anyone decided it should, but because no one built the off switch." },
+    { "type": "h2", "text": "The Social Cost" },
+    { "type": "p", "text": "The consequences are starting to show. A generation raised on the internet is now entering middle age, and they are discovering that the internet remembers their twenties better than they do. Not the good parts — the parts they’d prefer to have left behind. The blog posts full of opinions they no longer hold. The comment threads where they were wrong, or cruel, or simply young." },
+    { "type": "p", "text": "For public figures, this has become a spectator sport. The cycle is predictable: someone rises to prominence, a stranger with time and a search engine excavates their digital past, and the ensuing scandal plays out as though the person who wrote those words yesterday is the same person standing at the podium today. We know intellectually that people change. We have built a system that makes it impossible to prove." },
+    { "type": "p", "text": "But the damage extends far beyond public figures. Ordinary people are denied jobs because of decade-old social media posts. Teenagers live in terror of screenshots. Survivors of trauma find that the worst moments of their lives have been preserved in court records, news articles, and forum threads that will outlive them. The internet does not distinguish between information that serves the public interest and information that merely satisfies public curiosity." },
+    { "type": "p", "text": "There is a cruelty to this that we have not yet fully reckoned with. Forgetting is an act of grace. It is the mechanism by which societies allow people to change, to grow, to become someone other than who they were. A culture that cannot forget is a culture that cannot forgive." },
+    { "type": "h2", "text": "Toward a Right to Decay" },
+    { "type": "p", "text": "The European Union’s “right to be forgotten” was a first attempt at addressing this, and it has been mostly a failure — not because the principle is wrong, but because the implementation is a band-aid on a structural wound. You cannot solve an architectural problem with a legal patch. Deleting a search result does not delete the underlying page. Deleting the page does not delete the cached copies. Deleting the cached copies does not delete the model weights." },
+    { "type": "p", "text": "What we need is not a right to deletion but a right to decay. Information should, by default, become harder to find over time. Not erased — that would be its own form of violence against the historical record — but deprioritized, deindexed, allowed to sink beneath the surface of easy retrieval. The way a newspaper clipping from 1987 still exists in a library archive but no longer appears when you search someone’s name." },
+    { "type": "p", "text": "This would require rethinking the fundamental architecture of search and storage. It would mean building systems where the default is not permanence but gradual obscurity. Where relevance has a half-life. Where the cost of remembering increases over time, rather than remaining fixed at zero." },
+    { "type": "p", "text": "Some will object that this amounts to censorship, or that it undermines accountability. But accountability does not require permanent searchability. Courts maintain records. Libraries maintain archives. Journalists maintain sources. The question is not whether information should exist but whether it should be instantly retrievable by anyone with a search bar and a grudge, forever." },
+    { "type": "p", "text": "We designed the internet to remember. We forgot to design it to forget. That may be the most consequential architectural decision of the century, and we made it by accident." }
+  ],
+  "hero_image_url": "",
+  "hero_caption": "",
+  "template": "classic",
+  "is_cover": false,
+  "read_minutes": 6,
+  "published_at": "2026-05-14T21:00:00Z"
+}

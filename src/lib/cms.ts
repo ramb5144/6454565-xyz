@@ -9,6 +9,7 @@
 
 import articlesSnapshot from "@/data/articles.json";
 import coverSnapshot from "@/data/cover.json";
+import superCoolPostSnapshot from "@/data/super-cool-post.json";
 
 const CMS_URL = process.env.CMS_URL ?? "http://localhost:8000";
 const REVALIDATE_SECONDS = 180;
@@ -73,11 +74,10 @@ export async function getArticleList(): Promise<ArticleCard[]> {
 export async function getArticle(slug: string): Promise<Article> {
   const list = articlesSnapshot as ArticleCard[];
   const baked = list.find((a) => a.slug === slug);
-  // Cover snapshot is full-body; other articles in the list are card-shaped only.
-  const fallback = (
-    slug === (coverSnapshot as Article).slug
-      ? coverSnapshot
-      : baked ?? coverSnapshot
-  ) as Article;
+  const fullBodySnapshots: Record<string, Article> = {
+    [(coverSnapshot as Article).slug]: coverSnapshot as Article,
+    [(superCoolPostSnapshot as Article).slug]: superCoolPostSnapshot as Article,
+  };
+  const fallback = (fullBodySnapshots[slug] ?? baked ?? coverSnapshot) as Article;
   return getJson<Article>(`/api/articles/${slug}/`, fallback);
 }
